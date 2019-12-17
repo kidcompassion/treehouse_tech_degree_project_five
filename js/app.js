@@ -1,0 +1,1 @@
+const cardListing = new CardListing();
