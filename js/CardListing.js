@@ -1,44 +1,37 @@
 class CardListing{
-    constructor(id, img, name, email, city, state, phone, address, dob){
-        //const card = new Card('https://www.fillmurray.com/200/300', 'Bill', 'bill@fillmurray.com', 'Edmonton', 'Canada', '123456', '123 street', '02/10/2000' );
-        //this.getAPIData();
-        
-        this.createUserCards();
-        this.createSearchForm();
-        this.testArray = new Array();
+    constructor(currentStaff){
+        this.currentStaff = currentStaff;
+        const employeeList = this.prepareCardData(this.currentStaff);
+        this.populateCards(employeeList);
+    }
+
+    prepareCardData(data){
+        let cards = [];
+        data.map((employee, index)=>{
+            cards[index] = {
+                "index" : index,
+                "img" :employee.picture,
+                "name" : employee.name.first + ' ' + employee.name.last,
+                "email" : employee.email,
+                "city" : employee.location.city,
+                "state" : employee.location.state,
+                "phone" : employee.phone,
+                "address" : employee.location,
+                "dob" : employee.dob,
+            }
+        });
+        app.staffList = cards;
+        return cards;
+
     }
 
 
-    // Dynamically generate Cards, populated with data
-    createUserCards(){
-        const userData = this.getAPIData();
-        
-        const allCurrentStaff = userData.results.map((user, index)=> new Card(
-            index,
-            user.id,
-            user.picture.medium,
-            user.name.first + ' ' + user.name.last,
-            user.email,
-            user.location.city,
-            user.location.state,
-            user.cell,
-            user.location.street.number + ' ' + user.location.street.name,
-            user.dob.date
-
-        ),
-        
-        
-        );
-
-
-        
-        
+    populateCards(employeeList){
+        console.log(employeeList);
+        employeeList.map((employee)=> new Card(employee));
     }
 
-    setArray(data){
-        console.log(data);
-
-    }
+    
 
     createSearchForm(){
         const searchForm = document.createElement('form');
@@ -53,16 +46,16 @@ class CardListing{
 
     }
 
-
-
-
-
-    retrieveData(){
+    prevModal(event, userId){
+        console.log('prev listing', event, userId);
+    }
+    nextModal(){
 
     }
-    getAPIData(){
-        const userAPI = {"results":[{"gender":"female","name":{"title":"Mrs","first":"Lærke","last":"Hansen"},"location":{"street":{"number":3220,"name":"Sæbyvej"},"city":"København N","state":"Midtjylland","country":"Denmark","postcode":58637,"coordinates":{"latitude":"-35.4044","longitude":"122.3401"},"timezone":{"offset":"-1:00","description":"Azores, Cape Verde Islands"}},"email":"laerke.hansen@example.com","login":{"uuid":"93765d65-8fc7-45ec-bb3b-3b4470bff3bd","username":"redelephant739","password":"clayton","salt":"0YCw4U7S","md5":"a52c4932c0162e84e237636bd04be657","sha1":"efebe6c15c65549213574eb4c52834dfe755a75e","sha256":"e14176fed739b8fb21e61f930fbed49c8471bb4e612e344aaa7ea690ec11c296"},"dob":{"date":"1959-04-16T18:41:46.835Z","age":60},"registered":{"date":"2006-09-08T14:39:54.190Z","age":13},"phone":"07992782","cell":"69857709","id":{"name":"CPR","value":"160459-4836"},"picture":{"large":"https://randomuser.me/api/portraits/women/45.jpg","medium":"https://randomuser.me/api/portraits/med/women/45.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/45.jpg"},"nat":"DK"},{"gender":"male","name":{"title":"Mr","first":"Noah","last":"Jensen"},"location":{"street":{"number":7778,"name":"Højtoftevej"},"city":"Gjerlev","state":"Sjælland","country":"Denmark","postcode":19476,"coordinates":{"latitude":"-51.7174","longitude":"56.2742"},"timezone":{"offset":"-10:00","description":"Hawaii"}},"email":"noah.jensen@example.com","login":{"uuid":"fe8bc0f6-c594-41b3-9c53-c19efa87fb5f","username":"yellowpanda762","password":"ferris","salt":"M58OHE0S","md5":"837892be4d936674000b08bf7fe5ac43","sha1":"bd5dd38c5c51aa8284c6927db6e7d4c7720749e8","sha256":"8b163f727d96426538cf9687259da45173d5e11a6b51d33a2b518b441ca69c69"},"dob":{"date":"1946-12-09T02:50:25.569Z","age":73},"registered":{"date":"2016-01-28T02:31:03.298Z","age":3},"phone":"13623848","cell":"64127598","id":{"name":"CPR","value":"091246-0940"},"picture":{"large":"https://randomuser.me/api/portraits/men/21.jpg","medium":"https://randomuser.me/api/portraits/med/men/21.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/men/21.jpg"},"nat":"DK"},{"gender":"female","name":{"title":"Ms","first":"Ceyhan","last":"Kavaklıoğlu"},"location":{"street":{"number":2617,"name":"Filistin Cd"},"city":"Artvin","state":"Batman","country":"Turkey","postcode":88610,"coordinates":{"latitude":"35.9697","longitude":"85.1449"},"timezone":{"offset":"-1:00","description":"Azores, Cape Verde Islands"}},"email":"ceyhan.kavaklioglu@example.com","login":{"uuid":"0c315935-c6ea-4723-88fd-1f71fe27e649","username":"angrygoose763","password":"cashmone","salt":"PqAtrEu2","md5":"ca0c1b12b30d532a682f4603b56e16f3","sha1":"54ce432067a81237fb47f2061ac7a95b27c07741","sha256":"ffa6a76e4d15585f4b12e301afbea5820968fe2c9d7c2e611be6fbefeb3718f9"},"dob":{"date":"1985-06-30T14:37:45.805Z","age":34},"registered":{"date":"2015-02-01T03:04:26.018Z","age":4},"phone":"(402)-950-3974","cell":"(357)-865-6796","id":{"name":"","value":null},"picture":{"large":"https://randomuser.me/api/portraits/women/27.jpg","medium":"https://randomuser.me/api/portraits/med/women/27.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/27.jpg"},"nat":"TR"},{"gender":"male","name":{"title":"Mr","first":"Christian","last":"Walker"},"location":{"street":{"number":1557,"name":"The Green"},"city":"Plymouth","state":"Devon","country":"United Kingdom","postcode":"H0 8FF","coordinates":{"latitude":"-72.8420","longitude":"141.6609"},"timezone":{"offset":"-9:00","description":"Alaska"}},"email":"christian.walker@example.com","login":{"uuid":"da465475-d305-4bcb-8704-e906ec758cea","username":"greentiger502","password":"1015","salt":"vZlLyNi6","md5":"3d0a4ac2354aec613b78695c387d08a2","sha1":"727b2e212a5207aeaca5172102bde69b2d52cb1d","sha256":"4543595cb57e023614a32584bdb1d1537ccc140f9db8429aaa66ece344415207"},"dob":{"date":"1946-04-29T10:52:32.845Z","age":73},"registered":{"date":"2004-09-24T06:05:49.809Z","age":15},"phone":"019467 31754","cell":"0710-145-681","id":{"name":"NINO","value":"WM 43 88 27 Z"},"picture":{"large":"https://randomuser.me/api/portraits/men/98.jpg","medium":"https://randomuser.me/api/portraits/med/men/98.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/men/98.jpg"},"nat":"GB"},{"gender":"female","name":{"title":"Mrs","first":"Milja","last":"Jarvela"},"location":{"street":{"number":8033,"name":"Mechelininkatu"},"city":"Punkaharju","state":"Uusimaa","country":"Finland","postcode":55503,"coordinates":{"latitude":"10.7743","longitude":"60.7226"},"timezone":{"offset":"+4:00","description":"Abu Dhabi, Muscat, Baku, Tbilisi"}},"email":"milja.jarvela@example.com","login":{"uuid":"be9932e1-2ea4-435d-a96a-2e05e702fa33","username":"whitegoose543","password":"puppet","salt":"Qn118Tlk","md5":"a6d7621e399c841ea2a46322e9cb994e","sha1":"f3cf63563b9db5b9db2693e6781ac539cf060a2f","sha256":"30ac23e43b4c359911c553d829c24ef313d52a57d25f595f989b50b7d82662db"},"dob":{"date":"1966-02-22T03:02:57.538Z","age":53},"registered":{"date":"2018-12-25T15:02:27.669Z","age":1},"phone":"06-355-673","cell":"042-694-35-62","id":{"name":"HETU","value":"NaNNA798undefined"},"picture":{"large":"https://randomuser.me/api/portraits/women/89.jpg","medium":"https://randomuser.me/api/portraits/med/women/89.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/89.jpg"},"nat":"FI"},{"gender":"female","name":{"title":"Mrs","first":"Amanda","last":"George"},"location":{"street":{"number":8707,"name":"Manor Road"},"city":"St Albans","state":"Worcestershire","country":"United Kingdom","postcode":"FI6O 3QQ","coordinates":{"latitude":"27.1215","longitude":"-23.4102"},"timezone":{"offset":"-3:00","description":"Brazil, Buenos Aires, Georgetown"}},"email":"amanda.george@example.com","login":{"uuid":"ac98d342-d082-4d65-ae25-68fe2b685b2f","username":"silvermeercat635","password":"goldberg","salt":"IwU23Vsw","md5":"579acafeb070b3281da636f0069e1f87","sha1":"f605baeb9633e09c05af59b5a8d98c5e2ab812c5","sha256":"9b2e8eccc543ab72807a5be98f296f22b375aa747bf5f244f9f5677c1cd46c93"},"dob":{"date":"1979-01-24T01:11:31.809Z","age":40},"registered":{"date":"2009-03-08T23:18:22.403Z","age":10},"phone":"01954 70229","cell":"0765-986-448","id":{"name":"NINO","value":"MA 93 68 07 S"},"picture":{"large":"https://randomuser.me/api/portraits/women/94.jpg","medium":"https://randomuser.me/api/portraits/med/women/94.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/94.jpg"},"nat":"GB"},{"gender":"male","name":{"title":"Mr","first":"Konsta","last":"Oja"},"location":{"street":{"number":2394,"name":"Aleksanterinkatu"},"city":"Perho","state":"Pirkanmaa","country":"Finland","postcode":65930,"coordinates":{"latitude":"42.2202","longitude":"141.6904"},"timezone":{"offset":"-10:00","description":"Hawaii"}},"email":"konsta.oja@example.com","login":{"uuid":"267b3d63-d035-4f46-9400-814decf705f1","username":"tinylion846","password":"violin","salt":"yV8f2EKQ","md5":"288f43cd4edf59060ae137f537f2bdb0","sha1":"4d87198cb49220ea870c4c6fc8439284fa8ff350","sha256":"b9d08b629c4c3e50cb0ff076aa249a6aaa0fede7ff5c9ee9b9904f8ba6d714c2"},"dob":{"date":"1988-05-30T20:26:58.308Z","age":31},"registered":{"date":"2017-12-18T21:39:20.712Z","age":2},"phone":"09-198-335","cell":"043-232-66-78","id":{"name":"HETU","value":"NaNNA991undefined"},"picture":{"large":"https://randomuser.me/api/portraits/men/93.jpg","medium":"https://randomuser.me/api/portraits/med/men/93.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/men/93.jpg"},"nat":"FI"},{"gender":"male","name":{"title":"Mr","first":"Thomas","last":"Simmons"},"location":{"street":{"number":3698,"name":"Mcgowen St"},"city":"Bowral","state":"Victoria","country":"Australia","postcode":9829,"coordinates":{"latitude":"21.6662","longitude":"117.3921"},"timezone":{"offset":"+1:00","description":"Brussels, Copenhagen, Madrid, Paris"}},"email":"thomas.simmons@example.com","login":{"uuid":"10bbb260-ef5f-4231-88ab-9d2b052b8756","username":"angrydog649","password":"twisted","salt":"1oDWir8e","md5":"9de502bd9af7902d0f64d7d8f3067a5d","sha1":"13b55ef05b00c911d06d655183ae1a823d32a80a","sha256":"6f2099ada1afb5d065aa6ecfae5a7e634027908d9b0748da1308aafa14bcd3fa"},"dob":{"date":"1949-07-17T21:53:35.872Z","age":70},"registered":{"date":"2008-03-15T20:07:33.848Z","age":11},"phone":"03-9812-8586","cell":"0475-363-170","id":{"name":"TFN","value":"886078456"},"picture":{"large":"https://randomuser.me/api/portraits/men/73.jpg","medium":"https://randomuser.me/api/portraits/med/men/73.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/men/73.jpg"},"nat":"AU"},{"gender":"female","name":{"title":"Ms","first":"Peyton","last":"Fowler"},"location":{"street":{"number":6350,"name":"Daisy Dr"},"city":"Fremont","state":"Louisiana","country":"United States","postcode":24029,"coordinates":{"latitude":"20.2882","longitude":"-77.8387"},"timezone":{"offset":"-8:00","description":"Pacific Time (US & Canada)"}},"email":"peyton.fowler@example.com","login":{"uuid":"130abe20-268a-4d24-9d33-b7a6dc614eee","username":"lazymeercat683","password":"paloma","salt":"1hEZuxwQ","md5":"0d89bed6697d5ab7653b5b87db37dbd1","sha1":"d635626fb9ab2e92f7b25683027b16e0834bcda3","sha256":"20be93d7d924bba20e168d77984f09bfce5c5d85997e1a04174a6c1a78632647"},"dob":{"date":"1988-04-16T05:07:26.953Z","age":31},"registered":{"date":"2018-07-29T06:27:17.816Z","age":1},"phone":"(322)-634-3028","cell":"(802)-601-8324","id":{"name":"SSN","value":"179-18-2402"},"picture":{"large":"https://randomuser.me/api/portraits/women/40.jpg","medium":"https://randomuser.me/api/portraits/med/women/40.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/40.jpg"},"nat":"US"},{"gender":"male","name":{"title":"Mr","first":"Nicolas","last":"Clement"},"location":{"street":{"number":7989,"name":"Rue de L'Abbé-Roger-Derry"},"city":"Rouen","state":"Val-D'Oise","country":"France","postcode":34397,"coordinates":{"latitude":"-23.4075","longitude":"-169.7906"},"timezone":{"offset":"+3:00","description":"Baghdad, Riyadh, Moscow, St. Petersburg"}},"email":"nicolas.clement@example.com","login":{"uuid":"9ddad66c-94b8-4808-82a0-d875dd4bf7f9","username":"silverfish434","password":"lesbians","salt":"bhdJkOcF","md5":"95d80f33175c787431790cd6e3a89d45","sha1":"03889698d2cefdff795c64242ed652524d85d9ab","sha256":"91b8bede34d0e9d36a1a9a3f36ec532d7268a6d7a7e31ab6579dbf23f3aa8566"},"dob":{"date":"1950-03-27T02:59:59.660Z","age":69},"registered":{"date":"2008-01-25T22:24:48.265Z","age":11},"phone":"05-36-87-04-77","cell":"06-41-78-68-48","id":{"name":"INSEE","value":"1NNaN46122672 12"},"picture":{"large":"https://randomuser.me/api/portraits/men/35.jpg","medium":"https://randomuser.me/api/portraits/med/men/35.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/men/35.jpg"},"nat":"FR"},{"gender":"female","name":{"title":"Mrs","first":"Thea","last":"Smith"},"location":{"street":{"number":4294,"name":"Wilson Road"},"city":"Whanganui","state":"Marlborough","country":"New Zealand","postcode":62216,"coordinates":{"latitude":"-55.0232","longitude":"14.7828"},"timezone":{"offset":"-4:00","description":"Atlantic Time (Canada), Caracas, La Paz"}},"email":"thea.smith@example.com","login":{"uuid":"9c6ae8a3-ddfb-432b-a576-fe9598ac63ae","username":"bigbear847","password":"colin","salt":"RQqMEEvs","md5":"073a902548bc6701c30db48f6ec98b31","sha1":"9013b79151012b6d3575d4d35d825badcec1bb1d","sha256":"e0ff515cbb925e4fccd13d13bc714ad4ded7363d191e98294aad0d86b67e257f"},"dob":{"date":"1966-12-03T15:47:25.140Z","age":53},"registered":{"date":"2009-11-06T21:47:43.762Z","age":10},"phone":"(037)-822-2579","cell":"(992)-012-0538","id":{"name":"","value":null},"picture":{"large":"https://randomuser.me/api/portraits/women/22.jpg","medium":"https://randomuser.me/api/portraits/med/women/22.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/22.jpg"},"nat":"NZ"},{"gender":"female","name":{"title":"Miss","first":"Afet","last":"Kutlay"},"location":{"street":{"number":7718,"name":"Necatibey Cd"},"city":"Balıkesir","state":"Manisa","country":"Turkey","postcode":39702,"coordinates":{"latitude":"-14.3149","longitude":"-46.5934"},"timezone":{"offset":"-10:00","description":"Hawaii"}},"email":"afet.kutlay@example.com","login":{"uuid":"8a3cef8c-1485-4d6c-b285-bdec456b99a6","username":"purplerabbit822","password":"ccbill","salt":"hWk730Pt","md5":"81b049a6d4110f708aee62473a039f19","sha1":"ae28e93dd156468d2d9db7252c25d071a03c71a4","sha256":"3460ed6854ffdc628ae1e9518963001738f3f36bc84ea467a142f28ee26345f5"},"dob":{"date":"1973-10-01T16:32:21.172Z","age":46},"registered":{"date":"2005-04-30T11:32:00.906Z","age":14},"phone":"(670)-678-0556","cell":"(615)-729-4506","id":{"name":"","value":null},"picture":{"large":"https://randomuser.me/api/portraits/women/35.jpg","medium":"https://randomuser.me/api/portraits/med/women/35.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/35.jpg"},"nat":"TR"}],"info":{"seed":"1748241aefef7af7","results":12,"page":1,"version":"1.3"}}
-        return userAPI;
-    }
+
+
+
+
+
 
 }
