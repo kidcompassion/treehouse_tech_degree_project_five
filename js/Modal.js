@@ -4,15 +4,19 @@
 
 class Modal{
     constructor(card, currentEmployee){
-  
-  this.createModal(card, currentEmployee);
-
-    }
-
+        this.totalEmployees = app.staffList.length - 1;
+        this.createModal(card, currentEmployee);
+    
+}
 
 
     createModal(card, employee){
-        console.log(card);
+        const existingModal = document.querySelector('.modal-container');
+        if(existingModal!== null){
+            existingModal.parentNode.removeChild(existingModal);
+        }
+       
+        console.log(employee, card);
         const modal = document.createElement('div');
         modal.className = 'modal-container';
 
@@ -25,7 +29,7 @@ class Modal{
                                     <p class="modal-text cap">${employee.state}</p>
                                     <hr>
                                     <p class="modal-text">${employee.phone}</p>
-                                    <p class="modal-text">${employee.address}</p>
+                                    <p class="modal-text">${employee.address.street.number} ${employee.address.street.name}</p>
                                     <p class="modal-text">Birthday: ${employee.dob}</p>
                                 </div>
                             </div>
@@ -34,7 +38,7 @@ class Modal{
                                 <button type="button" id="modal-next" data-user="${employee.index}"class="modal-next btn">Next</button>
                             </div>`;
 
-        const body = document.querySelector('body');
+        const body = document.querySelector('#gallery');
         body.appendChild(modal);
 
         const closeBtn = document.getElementById('modal-close-btn');
@@ -50,10 +54,16 @@ class Modal{
     nextModal(card, employee){
         //Add listener to modal's next button
         const nextBtn = document.getElementById('modal-next');
+        let nextUser;
         nextBtn.addEventListener('click', event=>{
             
-            console.log(employee);
-            let nextUser = employee.index+1;
+
+            if (employee.index >= this.totalEmployees ){
+                nextUser = 0;
+            } else {
+                nextUser = employee.index+1;
+            }
+            
             this.createModal(card, app.staffList[nextUser]);
         });
     }
@@ -61,11 +71,19 @@ class Modal{
     prevModal(card, employee){
            //Add listener to modal's prev button
            const prevBtn = document.getElementById('modal-prev');
+           let prevEmployee;
            prevBtn.addEventListener('click', event=>{
-            console.log(employee);
-               let prevUser = employee.index-1;
+        
 
-               this.createModal(card, app.staffList[prevUser]);
+            if (employee.index > 0 ){
+                
+                prevEmployee = employee.index-1;
+            } else {
+                prevEmployee = 11;
+            }
+            
+
+               this.createModal(card, app.staffList[prevEmployee]);
                //Add handler for cases where value is negative
                //Use the returned value to get the data for this user
              //  console.log(app.allEmployees[prevUser]);

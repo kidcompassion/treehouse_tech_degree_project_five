@@ -1,7 +1,7 @@
 const app = {};
 
 
-fetch('https://randomuser.me/api/?results=12')
+fetch('https://randomuser.me/api/?results=12&nat=us,gb,ca,nz')
     .then(response => response.json())
     .then(data => getData(data.results))
     //.then(data => console.log(data.results))
