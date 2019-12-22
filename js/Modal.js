@@ -36,10 +36,11 @@ class Modal{
                                     <img class="modal-img" src="${employee.img.large}" alt="profile picture">
                                     <h3 id="name" class="modal-name cap">${employee.name}</h3>
                                     <p class="modal-text">${employee.email}</p>
-                                    <p class="modal-text cap">${employee.state}</p>
+                                    <p class="modal-text">${employee.address.street.number} ${employee.address.street.name}</p>
+                                    <p class="modal-text">${employee.address.city}, ${employee.address.state}</p>
+                                    <p class="modal-text cap">${employee.address.country}, ${employee.address.postcode}</p>
                                     <hr>
                                     <p class="modal-text">${employee.phone}</p>
-                                    <p class="modal-text">${employee.address.street.number} ${employee.address.street.name}</p>
                                     <p class="modal-text">Birthday: ${employee.dob}</p>
                                 </div>
                             </div>;
