@@ -45,13 +45,19 @@ header h1 {
     max-width: 20rem;
     transition: .4s ease-out;
     outline: none;
+    -moz-appearance: searchfield;
 }
+
 
 .search-input:active, .search-input:hover, .search-input:focus {
     border: 1px solid rgba(50, 50, 50, 0.9);
 }
 
-.search-submit {
+#search-input::-webkit-search-cancel-button{
+    display: none;
+}
+
+.search-submit, .search-reset {
     cursor: pointer;
     height: 33px;
     background: rgba(245, 245, 245, 0.9);
@@ -65,6 +71,19 @@ header h1 {
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(50, 50, 50, 0.9);
 }
+
+.search-reset{
+    border-radius: 0px;
+}
+
+.error-msg{
+    background-color: red;
+    color: white;
+    margin-top: 8px;
+    padding: 8px;
+    display: block;
+}
+
 
 
 /* ===================================== 
@@ -250,6 +269,7 @@ header h1 {
     .search-container {
         margin-top: 25px;
     }
+
 
     .modal {
         margin-top: 100px;

@@ -1,33 +1,34 @@
 /**
- * 
+ *  Card
+ *  -----------------
+ *  Renders the individual cards, and triggers creation of new modals on an as needed basis
  */
 
 class Card{
     constructor(employee){
         this.modal = [];
-
         this.createCard(employee);
-        
-      //  console.log(this);
-        
-
     }
 
+    /**
+     * create click event to employee card, so we can trigger modal
+     * @param {Node} card 
+     * @param {Object} employee 
+     */
     setupModalEvent(card, employee){
         card.addEventListener('click', (event)=>{
             this.modal = new Modal(card, employee);
         });
-
     }
 
+    /**
+     * Create card template and add modal click event to card
+     * @param {Object} employee 
+     */
     createCard(employee){
-      //  console.log(employee);
+        // Create and render card template
         const card = document.createElement('div');
         card.className = 'card';
-        //card.setAttribute('data-id', id);
-       // card.setAttribute('data-index', index);
-
-        //Create blank card markup and insert it into wrapper
         card.innerHTML = `  <div class="card-img-container">
                                 <img class="card-img" src="${employee.img.medium}" alt="profile picture">
                             </div>
@@ -37,16 +38,13 @@ class Card{
                                 <p class="card-text cap">${employee.city}, ${employee.state}</p>
                             </div>`;
         
-        // Grab gallery div
+        // Add card template to listing page
         const gallery = document.getElementById('gallery');
-        //Insert card
         gallery.appendChild(card);
 
+        // Adds click event to the card, which triggers creation of modal
         this.setupModalEvent(card, employee);
-
     }
-
-        
 }
 
 
